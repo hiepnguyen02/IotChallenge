@@ -12,12 +12,12 @@ const HumidityCard = (props) => {
             alignItems:'center',
             margin:10,
             width:160,
-            height:210,
+            height:150,
             borderRadius:10,
         },
         Text:{
             color: 'white',
-            margin: 15,
+            margin: 5,
             fontSize: 20,
         },
         cardIcon:{
