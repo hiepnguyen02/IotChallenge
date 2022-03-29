@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions, SectionList } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import TemperatureCard from './components/TemperatureCard.js';
@@ -13,16 +13,64 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 function Devices() {
+  const DATA = [
+    {
+      title: "Thiết bị đang kết nối",
+      data: ["BGM220_air_quality"]
+    },
+    {
+      title: "Thiết bị lân cận",
+      data: ["BGM1", "BGM2", "BGM3"]
+    },
+    {
+      title: "Tình trạng người xung quanh",
+      data: ["BGM1 là F0", "BGM2 là F1"]
+    },
+  ];
+
+  const Item = ({ title }) => (
+    <View style={styles.item}>
+      <Text style={styles.title}>{title}</Text>
+    </View>
+  );
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingTop: StatusBar.currentHeight,
+      marginHorizontal: 16
+    },
+    item: {
+      backgroundColor: "#f9c2ff",
+      padding: 20,
+      marginVertical: 8
+    },
+    header: {
+      fontSize: 32,
+      backgroundColor: "#fff"
+    },
+    title: {
+      fontSize: 24
+    }
+  });
+
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Feed!</Text>
+      <SectionList
+        sections={DATA}
+        keyExtractor={(item, index) => item + index}
+        renderItem={({ item }) => <Item title={item} />}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text style={styles.header}>{title}</Text>
+        )}
+      />
     </View>
   );
 }
 
 function Home() {
   const [darkTheme, setdarkTheme] = useState(true)
-   const [currentAqi, setCurrentAqi] = useState('184')
+   const [currentAqi, setCurrentAqi] = useState('100')
    const [currentLocation, setCurrentLocation] = useState('Ha Noi')
    const [currentTemperature, setCurrentTemperature] = useState('27')
    const [currentHumidity, setCurrentHumidity] = useState('88')
@@ -31,7 +79,7 @@ function Home() {
    const styles = StyleSheet.create({
     container:{
       flex: 1,
-      backgroundColor: darkTheme ? '#232634' : '#f2f2f2',
+       backgroundColor: darkTheme ? '#FF2D00' : '#f2f2f2',
       alignItems: 'center',
     },
     aqi:{
@@ -58,6 +106,8 @@ function Home() {
       width: Dimensions.get('window').width,
       height: 350,
     },
+    
+    
   });
 
 
@@ -75,20 +125,74 @@ function Home() {
     </View>
 
     <View style={styles.cardView}>
-      <TemperatureCard backgroundColor={darkTheme ? '#ff873d' : '#cc6e30'} temperature={'21°C'} icon={1} ></TemperatureCard>
-      <HumidityCard backgroundColor={darkTheme ? '#D29600' : 'FCC63F' } humidity={'56%'} icon={1}></HumidityCard>
+      <TemperatureCard backgroundColor={darkTheme ? '#ff873d' : '#cc6e30'} temperature={'28°C'} icon={1} ></TemperatureCard>
+      <HumidityCard backgroundColor={darkTheme ? '#D29600' : 'FCC63F' } humidity={'88%'} icon={1}></HumidityCard>
     </View>
   </View>
   );
 }
 
 function Personal() {
+
+  const DATA = [
+    {
+      title: "Thông tin cá nhân",
+      data: ["Họ và tên: Nguyễn Văn Hiệp", "Tuổi: 20", "Cân nặng: 53 kg", "Chiều cao: 170 cm"]
+    },
+    {
+      title: "Tiểu sử bệnh nền",
+      data: ["Không có"]
+    },
+    {
+      title: "Tiểu sử nhiễm Covid",
+      data: ["Ngày nhiễm: 17/02/2022", "Triệu chứng: Ho, sốt, ớn lạnh"]
+    },
+    {
+      title: "Lời khuyên từ chuyên gia",
+      data: ["Tập thể dục đều đặn", "Đeo khẩu trang thường xuyên để tránh tái nhiễm"]
+    }
+  ];
+
+  const Item = ({ title }) => (
+    <View style={styles.item}>
+      <Text style={styles.title}>{title}</Text>
+    </View>
+  );
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingTop: StatusBar.currentHeight,
+      marginHorizontal: 16
+    },
+    item: {
+      backgroundColor: "#f9c2ff",
+      padding: 20,
+      marginVertical: 8
+    },
+    header: {
+      fontSize: 32,
+      backgroundColor: "#fff"
+    },
+    title: {
+      fontSize: 24
+    }
+  });
+  
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Personal!</Text>
+      <SectionList
+        sections={DATA}
+        keyExtractor={(item, index) => item + index}
+        renderItem={({ item }) => <Item title={item} />}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text style={styles.header}>{title}</Text>
+        )}
+      />
     </View>
   );
 }
+
 
 
 
